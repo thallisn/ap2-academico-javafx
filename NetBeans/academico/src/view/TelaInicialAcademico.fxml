@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaInicialAcademicoController">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="250.0" style="-fx-background-color: #5271ff;">
+         <children>
+            <VBox alignment="CENTER" prefHeight="600.0" prefWidth="250.0">
+               <children>
+                  <Button fx:id="buttonAluno" mnemonicParsing="false" onAction="#handleButtonAluno" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white;" text="Aluno">
+                     <font>
+                        <Font name="Comic Sans MS" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="buttonDisciplina" mnemonicParsing="false" onAction="#handleButtonDisciplina" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white;" text="Disciplina">
+                     <font>
+                        <Font name="Comic Sans MS" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="buttonTurma" mnemonicParsing="false" onAction="#handleButtonTurma" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white;" text="Turma">
+                     <font>
+                        <Font name="Comic Sans MS" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children></AnchorPane>
+      <AnchorPane fx:id="anchorPaneTelaInicialLogo" layoutX="250.0" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: white;">
+         <children>
+            <ImageView fitHeight="600.0" fitWidth="650.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/icon_logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

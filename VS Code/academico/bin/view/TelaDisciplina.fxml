@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaDisciplinaController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="650.0">
+         <children>
+            <Label text="Disciplinas" textFill="#5271ff">
+               <font>
+                  <Font name="Comic Sans MS" size="48.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="imageCadastrarDisciplina" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleCadastrarDisciplina" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/icon_add.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <ImageView fx:id="imageEditarDisciplina" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleEditarDisciplina" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/icon_edit.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="imageDeletarDisciplina" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleDeletarDisciplina" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/icon_delete.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <TextField fx:id="textFieldPesquisarDisciplina" onKeyPressed="#handlePesquisarDisciplina" prefHeight="30.0" prefWidth="430.0" promptText="Pesquisar disciplinas por nome">
+                     <font>
+                        <Font name="Comic Sans MS" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <TableView fx:id="tableDisciplina" prefHeight="480.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="tableColumnIdDisciplina" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="tableColumnNomeDisciplina" prefWidth="500.0" text="Nome" />
+                  <TableColumn fx:id="tableColumnChDisciplina" prefWidth="75.0" text="C.H." />
+              </columns>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
