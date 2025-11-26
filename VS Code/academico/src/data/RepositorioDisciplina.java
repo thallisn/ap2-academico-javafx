@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.File;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+
 import model.Disciplina;
 import model.IDisciplina;
 
@@ -18,25 +19,35 @@ public class RepositorioDisciplina implements IDisciplina {
     private final String ARQUIVO_DISCIPLINAS = "disciplina.ser";
     private final String ARQUIVO_ID_DISCIPLINAS = "idDisciplina.dat";
 
-    @Override
-    public ArrayList<Disciplina> getAllDisciplinas() {
-        ArrayList<Disciplina> disciplinasCadastradas = new ArrayList<>();
+    public RepositorioDisciplina() {
+        ArrayList<Disciplina> listaVaziaDeDisciplinas = new ArrayList<>();
         File arquivoDisciplinas = new File(ARQUIVO_DISCIPLINAS);
 
-        // Se o arquivo ainda nao existir, cria um novo e retorna uma lista vazia
+        // Se o arquivo "disciplina.ser" ainda não existir cria um novo e escreve uma
+        // lista vazia
         if (!arquivoDisciplinas.exists()) {
             try {
 
                 arquivoDisciplinas.createNewFile();
 
+                try (ObjectOutputStream escritorDeDados = new ObjectOutputStream(
+                        new FileOutputStream(ARQUIVO_DISCIPLINAS))) {
+
+                    escritorDeDados.writeObject(listaVaziaDeDisciplinas);
+                }
+
             } catch (IOException e) {
-                System.err.println("Erro ao criar arquivo de dados das disciplinas!" + e.getMessage());
+                System.err.println("Erro ao criar arquivo de disciplinas!" + e.getMessage());
                 e.printStackTrace();
             }
-            return disciplinasCadastradas;
         }
+    }
 
-        // Se o arquivo existir, recurpera e retorna as disciplinas cadastradas
+    @Override
+    public ArrayList<Disciplina> getAllDisciplinas() {
+        ArrayList<Disciplina> disciplinasCadastradas = new ArrayList<>();
+
+        // Lê e retorna a lista de disciplinas armazenada no arquivo
         try (ObjectInputStream leitorDeObjetos = new ObjectInputStream(new FileInputStream(ARQUIVO_DISCIPLINAS))) {
 
             disciplinasCadastradas = (ArrayList<Disciplina>) leitorDeObjetos.readObject();
@@ -64,11 +75,9 @@ public class RepositorioDisciplina implements IDisciplina {
             }
 
             // Se o arquivo existir, le o ultimo id, incrementa, grava e retorna seu valor
-            try (DataInputStream leitorDeDados = new DataInputStream(new FileInputStream(arquivoDeIds))) {
-                ultimoIdCadastrado = leitorDeDados.readInt();
-            }
-
+            ultimoIdCadastrado = lerUltimoIdCadastrado(arquivoDeIds);
             novoId = ultimoIdCadastrado + 1;
+
             gravarNovoId(novoId, arquivoDeIds);
 
         } catch (Exception e) {
@@ -78,20 +87,22 @@ public class RepositorioDisciplina implements IDisciplina {
         return novoId;
     }
 
-    private void gravarNovoId(int novoId, File arquivoDeIds) throws FileNotFoundException, IOException {
-        try (DataOutputStream escritorDeDados = new DataOutputStream(new FileOutputStream(arquivoDeIds))) {
-            escritorDeDados.writeInt(novoId);
+    private int lerUltimoIdCadastrado(File arquivoDeIds) throws IOException {
+        int ultimoIdCadastrado;
+
+        try (DataInputStream leitorDeDados = new DataInputStream(new FileInputStream(arquivoDeIds))) {
+            ultimoIdCadastrado = leitorDeDados.readInt();
         }
+
+        return ultimoIdCadastrado;
     }
 
-    @Override
-    public void createDisciplina(Disciplina disciplina) {
-        disciplina.setId(gerarNovoIdParaDisciplina());
+    private void gravarNovoId(int novoId, File arquivoDeIds) throws FileNotFoundException, IOException {
 
-        ArrayList<Disciplina> disciplinasCadastradas = getAllDisciplinas();
-        disciplinasCadastradas.add(disciplina);
+        try (DataOutputStream escritorDeDados = new DataOutputStream(new FileOutputStream(arquivoDeIds))) {
 
-        atualizarArquivoDisciplina(disciplinasCadastradas);
+            escritorDeDados.writeInt(novoId);
+        }
     }
 
     private void atualizarArquivoDisciplina(ArrayList<Disciplina> disciplinasCadastradas) {
@@ -104,6 +115,16 @@ public class RepositorioDisciplina implements IDisciplina {
             System.err.println("Erro no método atualizarArquivoDisciplina: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void createDisciplina(Disciplina disciplina) {
+        disciplina.setId(gerarNovoIdParaDisciplina());
+
+        ArrayList<Disciplina> disciplinasCadastradas = getAllDisciplinas();
+        disciplinasCadastradas.add(disciplina);
+
+        atualizarArquivoDisciplina(disciplinasCadastradas);
     }
 
     @Override
@@ -145,6 +166,7 @@ public class RepositorioDisciplina implements IDisciplina {
         atualizarArquivoDisciplina(disciplinasCadastradas);
     }
 
+    @Override
     public void deleteDisciplina(Disciplina disciplina) {
         ArrayList<Disciplina> disciplinasCadastradas = getAllDisciplinas();
         int indiceDaDisciplina = this.getIndiceDaDisciplina(disciplina.getId());
